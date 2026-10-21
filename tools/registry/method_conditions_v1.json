@@ -1,0 +1,120 @@
+{
+  "method_version": "EMA-METHODS-1.0",
+  "scope": "generic_physical_conditions_no_case_answers",
+  "methods": [
+    {
+      "method_id": "position_consistency",
+      "title_zh": "位置与速度一致性",
+      "purpose_zh": "检查相对初始位置变化与速度积分是否一致。",
+      "plain_explanation_zh": "把位置的变化和速度推算的路程对一遍；起步前就存在的固定偏差，可能在减去初始值时一起被抵消。",
+      "conditions": [
+        {"id": "numeric_input_contract", "scope": "calculation", "description_zh": "单位、采样、通道长度和有限值符合观测合约。"},
+        {"id": "valid_motion_window", "scope": "interpretation", "description_zh": "报警解释使用完整窗口有效运动掩码。"},
+        {"id": "independent_initial_reference", "scope": "confirmation", "description_zh": "排除启动已有恒定偏置需要独立的初始参考。"}
+      ],
+      "supported_uses_zh": ["发现初始参考建立后的新增位置与速度不一致。"],
+      "limitations_zh": ["同一位置测量的初值不是独立绝对参考。"],
+      "prohibited_claims_zh": ["不能仅凭残差小或没有报警认定位置传感器绝对正常。"],
+      "next_checks": ["compute_residual_bundle", "query_operating_context"],
+      "source_refs": ["EMA-DIAG-1.0", "EMA-PHYSICS-CONTRACT-1.0"]
+    },
+    {
+      "method_id": "phase_sum",
+      "title_zh": "三相电流和",
+      "purpose_zh": "检查三相独立采集电流的和是否存在持续偏离。",
+      "plain_explanation_zh": "先确认三相电流都是分别取得的；如果第三相是拿前两相算出来的，再把三相相加，结果可能天然就是零。",
+      "conditions": [
+        {"id": "numeric_input_contract", "scope": "calculation", "description_zh": "三相通道为对齐且有限的三列电流。"},
+        {"id": "three_phase_acquisition", "scope": "interpretation", "description_zh": "三相分别采集，第三相不是由另外两相重构。"},
+        {"id": "valid_motion_window", "scope": "interpretation", "description_zh": "使用当前冻结检测流程规定的有效运动区间。"}
+      ],
+      "supported_uses_zh": ["在采集前提满足时检查三相测量的一致性。"],
+      "limitations_zh": ["采集通道分别取得不表示相电流在统计上独立。", "同一相电流经过变换得到的dq电流不是新增独立测量。"],
+      "prohibited_claims_zh": ["不能用重构形成的零电流和证明电流测量正常。"],
+      "next_checks": ["query_operating_context", "compute_residual_bundle"],
+      "source_refs": ["EMA-DIAG-1.0", "EMA-PHYSICS-CONTRACT-1.0"]
+    },
+    {
+      "method_id": "torque_balance",
+      "title_zh": "转矩平衡与负载补偿",
+      "purpose_zh": "比较电流估计转矩、标称机械项和明确来源的负载补偿。",
+      "plain_explanation_zh": "电机更吃力，既可能因为机械阻力增大，也可能只是外面负载变重或补偿数值不准；需要先查负载记录。",
+      "conditions": [
+        {"id": "numeric_input_contract", "scope": "calculation", "description_zh": "电流、速度等输入满足计算合约。"},
+        {"id": "nominal_parameter_record", "scope": "calculation", "description_zh": "有版本明确且数值有效的标称参数记录；这不等于现场参数已经校准。"},
+        {"id": "valid_motion_window", "scope": "interpretation", "description_zh": "整段窗口离开低速区且运动方向一致。"},
+        {"id": "explicit_compensation_basis", "scope": "interpretation", "description_zh": "实际采用的补偿依据需要在数值证据中明确标记。"},
+        {"id": "independent_normal_load", "scope": "confirmation", "description_zh": "机械原因确认需要可获得且有区分力的独立负载信息。"},
+        {"id": "cross_channel_alternatives_checked", "scope": "confirmation", "description_zh": "需要核对电流测量异常引起的转矩交叉响应等候选。"}
+      ],
+      "supported_uses_zh": ["在明确参数和补偿假设下描述转矩平衡不一致。"],
+      "limitations_zh": ["规定负载指令和基于指令的补偿不是独立负载测量。", "外载改变、补偿误差和附加机械阻力可能产生相近结果。"],
+      "prohibited_claims_zh": ["不能只凭转矩报警确认机械阻力故障。", "不能把未知负载默认为已知零负载。"],
+      "next_checks": ["query_operating_context", "lookup_method_conditions"],
+      "source_refs": ["EMA-DIAG-1.0", "EMA-PHYSICS-CONTRACT-1.0"]
+    },
+    {
+      "method_id": "motion_validity",
+      "title_zh": "有效运动窗口",
+      "purpose_zh": "限制运动段残差和持续性报警的适用范围。",
+      "plain_explanation_zh": "机器正在稳定向一个方向运动时的规则，不能直接拿去解释停住或换向的时候。",
+      "conditions": [
+        {"id": "numeric_input_contract", "scope": "calculation", "description_zh": "速度数据与时间轴可用于窗口计算。"},
+        {"id": "data_window_coverage", "scope": "calculation", "description_zh": "输入长度至少覆盖10 ms尾随窗口。"},
+        {"id": "valid_motion_window", "scope": "interpretation", "description_zh": "完整10 ms窗口内速度绝对值大于5 mm/s且方向一致，由残差工具实际检查。"}
+      ],
+      "supported_uses_zh": ["选取有效运动段进行当前历史检测流程的解释。"],
+      "limitations_zh": ["仅有足够长的数据，不代表实际存在有效运动窗口。"],
+      "prohibited_claims_zh": ["不能把无效运动点当作正常检测证据。"],
+      "next_checks": ["compute_residual_bundle", "locate_anomalies"],
+      "source_refs": ["EMA-DIAG-1.0"]
+    },
+    {
+      "method_id": "alarm_persistence",
+      "title_zh": "持续越限报警",
+      "purpose_zh": "区分短暂越限和满足持续性要求的异常。",
+      "plain_explanation_zh": "偶尔跳一下和连续多次不对劲是两回事；中途恢复或进入无效区间，都要重新计数。",
+      "conditions": [
+        {"id": "residual_grid_and_finiteness", "scope": "calculation", "description_zh": "输入为对齐、有限且1 ms间隔的受控残差。"},
+        {"id": "threshold_version_compatible", "scope": "calculation", "description_zh": "检测器实际验证冻结阈值版本与残差类型匹配。"},
+        {"id": "valid_motion_window", "scope": "interpretation", "description_zh": "连续10个有效运动残差点绝对值严格大于阈值。"},
+        {"id": "noise_calibration_available", "scope": "confirmation", "description_zh": "推广到带噪场景需要独立健康校准和冻结协议。"}
+      ],
+      "supported_uses_zh": ["复现理想仿真基线的首次越限和连续10点报警。"],
+      "limitations_zh": ["首次越限不同于首次持续报警，也不等于故障实际发生时间。", "查询区间起点重新计数，底层残差仍保留原尾随窗口。"],
+      "prohibited_claims_zh": ["不能把理想近零阈值直接解释为现实噪声下的灵敏度。"],
+      "next_checks": ["locate_anomalies"],
+      "source_refs": ["EMA-ALARM-1.0", "EMA-DETECTOR-IDEAL-1.0"]
+    },
+    {
+      "method_id": "cross_channel_response",
+      "title_zh": "多通道交叉响应",
+      "purpose_zh": "检查多个报警是否可能由同一个测量问题引起。",
+      "plain_explanation_zh": "同一处问题可能让好几个指标一起亮灯，不能亮了两盏灯就说一定坏了两个地方。",
+      "conditions": [
+        {"id": "cross_channel_alternatives_checked", "scope": "interpretation", "description_zh": "对比单相电流测量偏置等共同原因及其交叉响应。"},
+        {"id": "independent_corroboration", "scope": "confirmation", "description_zh": "区分多个机理需要独立且有区分力的佐证。"}
+      ],
+      "supported_uses_zh": ["组织共同原因与多个原因的候选解释。"],
+      "limitations_zh": ["dq电流、相电流及由它们形成的残差可能共享同一来源。"],
+      "prohibited_claims_zh": ["不能按报警通道数量直接确认故障数量。"],
+      "next_checks": ["query_operating_context", "compute_residual_bundle", "locate_anomalies"],
+      "source_refs": ["EMA-PHYSICS-CONTRACT-1.0"]
+    },
+    {
+      "method_id": "hypothesis_comparison",
+      "title_zh": "候选假设比较",
+      "purpose_zh": "检查模型预测是否能区分候选机理。",
+      "plain_explanation_zh": "两个原因都能算出差不多的结果时，再重复同样的计算并不会自动告诉我们哪个才是真的。",
+      "conditions": [
+        {"id": "hypotheses_distinguishable", "scope": "interpretation", "description_zh": "候选在可见量上给出可区分的预测。"},
+        {"id": "independent_corroboration", "scope": "confirmation", "description_zh": "模型预测以外还需独立观测支持确认。"}
+      ],
+      "supported_uses_zh": ["比较候选与观测的一致性，并识别信息不足。"],
+      "limitations_zh": ["重复等效仿真不增加独立观测信息。", "当前没有注册候选仿真工具。"],
+      "prohibited_claims_zh": ["不能把单个候选复现成功解释为排除了所有其他原因。"],
+      "next_checks": ["query_operating_context"],
+      "source_refs": ["EMA-PHYSICS-CONTRACT-1.0"]
+    }
+  ]
+}

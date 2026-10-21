@@ -1,0 +1,32 @@
+{
+  "config_version": "EMA-LOCAL-LLM-1.0",
+  "provider": "local_llama_cpp",
+  "deployment": "local",
+  "base_url": "http://127.0.0.1:8087/v1",
+  "model": "qwen3.5-4b-q4_k_m",
+  "source_model": "Qwen/Qwen3.5-4B",
+  "quantization_repository": "unsloth/Qwen3.5-4B-GGUF",
+  "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+  "model_file": "work/local_llm/models/Qwen3.5-4B-Q4_K_M.gguf",
+  "model_size_bytes": 2740937888,
+  "model_sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+  "runtime_release": "b11752",
+  "server_executable": "work/local_llm/llama-b11752/llama-server.exe",
+  "context_size": 16384,
+  "generation_settings": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "enable_thinking": true,
+    "stream": false,
+    "max_output_tokens_per_diagnostic_response": 8192
+  },
+  "call_budget": {
+    "diagnostic_model_responses_per_task": 12,
+    "diagnostic_tool_calls_per_task": 20,
+    "diagnostic_wall_time_limit_s": 1800,
+    "diagnostic_new_simulations_per_task": 0,
+    "report_repair_limit": 1,
+    "formal_budget_frozen": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "locate_anomalies",
+  "version": "EMA-STAGE4-ADAPTER-1.0",
+  "description": "Locate threshold exceedances and persistence alarms from a controlled residual bundle.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "residual_evidence_id": {
+        "type": "string",
+        "pattern": "^BUNDLE-[0-9a-f]{64}$"
+      },
+      "threshold_version": {
+        "type": "string",
+        "enum": [
+          "EMA-DETECTOR-IDEAL-1.0"
+        ],
+        "default": "EMA-DETECTOR-IDEAL-1.0"
+      },
+      "analysis_interval_s": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "required": [
+      "residual_evidence_id"
+    ],
+    "additionalProperties": false
+  },
+  "interval_policy": "inclusive_selection_counter_reset_at_interval_start",
+  "statuses": [
+    "ok",
+    "not_applicable",
+    "insufficient_data",
+    "execution_error"
+  ],
+  "allows_path_arguments": false,
+  "returns_raw_waveforms": false
+}

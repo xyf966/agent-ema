@@ -1,0 +1,8 @@
+{
+  "algorithm_version": "EMA-DIAG-1.0",
+  "kernel_sha256": "d62b2ced81617061832b0642fabc6464e6afc77b7ff53ffec60f253ab1f7c2f5",
+  "input_sample_time_s": 5E-06,
+  "window_s": 0.01,
+  "output_sample_time_s": 0.001,
+  "minimum_motion_speed_mps": 0.005
+}

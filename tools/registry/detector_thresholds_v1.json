@@ -1,0 +1,26 @@
+{
+  "threshold_version": "EMA-DETECTOR-IDEAL-1.0",
+  "channels": [
+    {
+      "quantity": "x_consistency_m",
+      "unit": "m",
+      "threshold": 6.9116223414835388E-8
+    },
+    {
+      "quantity": "phase_sum_A",
+      "unit": "A",
+      "threshold": 2.169237012240603E-17
+    },
+    {
+      "quantity": "torque_known_load_Nm",
+      "unit": "N*m",
+      "threshold": 0.00080629460070042467
+    }
+  ],
+  "consecutive_points": 10,
+  "sample_interval_s": 0.001,
+  "comparison": "strict_absolute_greater_than",
+  "invalid_motion_policy": "reset_counter",
+  "calibration_scope": "historical_ideal_simulation_baseline",
+  "noisy_conditions_validated": false
+}

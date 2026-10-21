@@ -1,0 +1,36 @@
+{
+  "name": "compute_residual_bundle",
+  "version": "EMA-STAGE4-ADAPTER-1.0",
+  "description": "Compute physical residuals from approved observations, with explicit optional command-based compensation. For approved boundary cases recorded_assumption selects a separate diagnostic setting; prescribed_command uses the actual prescribed-command record.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "case_id": {
+        "type": "string",
+        "pattern": "^CASE-[0-9a-f]{32}$"
+      },
+      "load_assumption": {
+        "type": "string",
+        "enum": [
+          "none",
+          "prescribed_command",
+          "recorded_assumption"
+        ],
+        "default": "none"
+      }
+    },
+    "required": [
+      "case_id"
+    ],
+    "additionalProperties": false
+  },
+  "statuses": [
+    "ok",
+    "not_applicable",
+    "insufficient_data",
+    "execution_error"
+  ],
+  "returns_raw_waveforms": false,
+  "allows_path_arguments": false,
+  "array_references": "opaque_bundle_and_evidence_ids"
+}

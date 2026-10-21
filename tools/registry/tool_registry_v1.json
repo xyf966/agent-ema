@@ -1,0 +1,67 @@
+{
+  "registry_version": "EMA-TOOLS-1.0",
+  "entrypoint": "ema_tool",
+  "scope": "offline_paper_tool_layer",
+  "llm_connected": false,
+  "allows_arbitrary_matlab": false,
+  "allows_path_arguments": false,
+  "process_sandbox": false,
+  "case_answers_included": false,
+  "states": [
+    "ok",
+    "not_applicable",
+    "insufficient_data",
+    "execution_error"
+  ],
+  "tools": [
+    {
+      "name": "inspect_case",
+      "version": "EMA-INSPECT-1.0",
+      "schema_file": "inspect_case.schema.json",
+      "schema_sha256": "34c53d0bbe6bb5c54a168e1aa44408e82b3d58cbd18d2f81e2ede23719eaf1ca",
+      "purpose": "Inspect anonymous observations and acquisition metadata",
+      "effect": "read_only"
+    },
+    {
+      "name": "compute_residual_bundle",
+      "version": "EMA-RESIDUAL-1.0",
+      "schema_file": "compute_residual_bundle.schema.json",
+      "schema_sha256": "7cbecdb9d39aea43f998226de2e4a90fab182f6bb376e823522ac42d96d8c514",
+      "purpose": "Compute residuals under an explicit load assumption",
+      "effect": "write_or_verify_fixed_residual_bundle"
+    },
+    {
+      "name": "locate_anomalies",
+      "version": "EMA-LOCATE-1.0",
+      "schema_file": "locate_anomalies.schema.json",
+      "schema_sha256": "2962a890ae8c93837465822200aa684e004fc856574dbcb784d47dac2e1f85ab",
+      "purpose": "Locate frozen threshold and persistence alarms",
+      "effect": "read_only"
+    },
+    {
+      "name": "query_operating_context",
+      "version": "EMA-CONTEXT-1.0",
+      "schema_file": "query_operating_context.schema.json",
+      "schema_sha256": "0e7c0a8ef4cb81741398ba91ee67f0f5e646d38bb357e96ebd679d66baf43aeb",
+      "purpose": "Query recorded context and unavailable independent information",
+      "effect": "read_only"
+    },
+    {
+      "name": "lookup_method_conditions",
+      "version": "EMA-METHOD-LOOKUP-1.0",
+      "schema_file": "lookup_method_conditions.schema.json",
+      "schema_sha256": "0579b5792dfa36455e63c5ce7888b004c169ed2fd1202e70bfb7b958849c9074",
+      "purpose": "Query generic method conditions without case diagnosis",
+      "effect": "read_only"
+    },
+    {
+      "name": "plot_evidence",
+      "version": "EMA-PLOT-1.0",
+      "schema_file": "plot_evidence.schema.json",
+      "schema_sha256": "3e228a6b24db5727a63d08fad456fb8fde38d2b0a18684599371cd8bec43f726",
+      "purpose": "Render existing numerical evidence",
+      "effect": "write_or_verify_fixed_figure_bundle"
+    }
+  ],
+  "rules": "Only these six tool names may be registered. Research tests, generation functions, arbitrary MATLAB evaluation and unimplemented tools must not be exposed."
+}

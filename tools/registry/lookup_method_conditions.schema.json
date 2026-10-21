@@ -1,0 +1,19 @@
+{
+  "name": "lookup_method_conditions",
+  "version": "EMA-METHOD-LOOKUP-1.0",
+  "description": "Look up frozen generic physical conditions and limits; optionally assess approved case metadata without diagnosing its cause.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "method_id": {"type": "string", "enum": ["all", "position_consistency", "phase_sum", "torque_balance", "motion_validity", "alarm_persistence", "cross_channel_response", "hypothesis_comparison"]},
+      "case_id": {"type": "string", "pattern": "^CASE-[0-9a-f]{32}$"},
+      "method_version": {"type": "string", "enum": ["EMA-METHODS-1.0"], "default": "EMA-METHODS-1.0"}
+    },
+    "required": ["method_id"],
+    "additionalProperties": false
+  },
+  "statuses": ["ok", "not_applicable", "insufficient_data", "execution_error"],
+  "returns_raw_waveforms": false,
+  "case_answers_included": false,
+  "allows_path_arguments": false
+}

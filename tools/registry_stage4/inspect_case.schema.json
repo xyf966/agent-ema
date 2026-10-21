@@ -1,0 +1,27 @@
+{
+  "name": "inspect_case",
+  "version": "EMA-STAGE4-ADAPTER-1.0",
+  "description": "Inspect approved anonymous observations and acquisition conditions before residual computation.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "case_id": {
+        "type": "string",
+        "pattern": "^CASE-[0-9a-f]{32}$"
+      }
+    },
+    "required": [
+      "case_id"
+    ],
+    "additionalProperties": false
+  },
+  "statuses": [
+    "ok",
+    "not_applicable",
+    "insufficient_data",
+    "execution_error"
+  ],
+  "data_release": "EMA-OBS-1.0",
+  "returns_raw_waveforms": false,
+  "allows_path_arguments": false
+}

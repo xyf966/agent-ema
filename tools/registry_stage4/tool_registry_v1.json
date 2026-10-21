@@ -1,0 +1,94 @@
+{
+  "registry_version": "EMA-TOOLS-STAGE4-1.1",
+  "entrypoint": "ema_tool_stage4",
+  "scope": "development_boundary_and_legacy_tool_layer",
+  "llm_connected": false,
+  "allows_arbitrary_matlab": false,
+  "allows_path_arguments": false,
+  "process_sandbox": false,
+  "case_answers_included": false,
+  "states": [
+    "ok",
+    "not_applicable",
+    "insufficient_data",
+    "execution_error"
+  ],
+  "tools": [
+    {
+      "name": "inspect_case",
+      "version": "EMA-STAGE4-ADAPTER-1.0",
+      "schema_file": "inspect_case.schema.json",
+      "schema_sha256": "465c2133bd888c9dacb91a971189715d7eac4d993cbfa59126616c8a8426faf1",
+      "purpose": "Inspect anonymous observations and acquisition metadata",
+      "effect": "read_only",
+      "response_versions": {
+        "legacy": "EMA-INSPECT-1.0",
+        "boundary": "EMA-INSPECT-1.0"
+      }
+    },
+    {
+      "name": "compute_residual_bundle",
+      "version": "EMA-STAGE4-ADAPTER-1.0",
+      "schema_file": "compute_residual_bundle.schema.json",
+      "schema_sha256": "4245e25e9358dc2a0ca49c582863176f9b2ab881958955c5bfb661f59b8b6c81",
+      "purpose": "Compute residuals under an explicit load assumption",
+      "effect": "write_or_verify_fixed_residual_bundle",
+      "response_versions": {
+        "legacy": "EMA-RESIDUAL-1.0",
+        "boundary": "EMA-BOUNDARY-RESIDUAL-1.0"
+      }
+    },
+    {
+      "name": "locate_anomalies",
+      "version": "EMA-STAGE4-ADAPTER-1.0",
+      "schema_file": "locate_anomalies.schema.json",
+      "schema_sha256": "d1b8a3598650d0925c77134fb473c32558fad3bcaa2a0fc31cf54b12fb8784ab",
+      "purpose": "Locate frozen threshold and persistence alarms",
+      "effect": "read_only",
+      "response_versions": {
+        "legacy": "EMA-LOCATE-1.0",
+        "boundary": "EMA-BOUNDARY-LOCATE-1.0"
+      }
+    },
+    {
+      "name": "query_operating_context",
+      "version": "EMA-STAGE4-ADAPTER-1.0",
+      "schema_file": "query_operating_context.schema.json",
+      "schema_sha256": "ff4c9a8945ea1b90fe67e10c1461efefa7e7ffa3964da33dc8a3bf05cb705440",
+      "purpose": "Query recorded context and unavailable independent information",
+      "effect": "read_only",
+      "response_versions": {
+        "legacy": "EMA-CONTEXT-1.0",
+        "boundary": "EMA-CONTEXT-1.0"
+      }
+    },
+    {
+      "name": "lookup_method_conditions",
+      "version": "EMA-STAGE4-ADAPTER-1.0",
+      "schema_file": "lookup_method_conditions.schema.json",
+      "schema_sha256": "6abfa63a58a264a28bd96e2b69a2e613bd639c8467afa50fb75aa4fbf1d99cf6",
+      "purpose": "Query generic method conditions without case diagnosis",
+      "effect": "read_only",
+      "response_versions": {
+        "legacy": "EMA-METHOD-LOOKUP-1.0",
+        "boundary": "EMA-METHOD-LOOKUP-1.0"
+      }
+    },
+    {
+      "name": "plot_evidence",
+      "version": "EMA-STAGE4-ADAPTER-1.0",
+      "schema_file": "plot_evidence.schema.json",
+      "schema_sha256": "2ad7b0999835380d4daa07ac60aa306aec45adc89fff0813b5bdefeac2deaad5",
+      "purpose": "Render existing numerical evidence",
+      "effect": "write_or_verify_fixed_figure_bundle",
+      "response_versions": {
+        "legacy": "EMA-PLOT-1.0",
+        "boundary": "EMA-BOUNDARY-PLOT-1.0"
+      }
+    }
+  ],
+  "rules": "Only these six tool names may be registered. Research tests, generation functions, arbitrary MATLAB evaluation and unimplemented tools must not be exposed.",
+  "current_agent_worker_switched": true,
+  "worker_profile": "stage4",
+  "response_version_policy": "exact_per_case_release"
+}

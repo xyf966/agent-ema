@@ -1,0 +1,18 @@
+{
+  "name": "plot_evidence",
+  "version": "EMA-PLOT-1.0",
+  "description": "Render an approved bundle as an observation/residual overview with frozen thresholds and persistence alarms; no diagnosis or private truth.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "residual_evidence_id": {"type": "string", "pattern": "^BUNDLE-[0-9a-f]{64}$"}
+    },
+    "required": ["residual_evidence_id"],
+    "additionalProperties": false
+  },
+  "statuses": ["ok", "not_applicable", "insufficient_data", "execution_error"],
+  "allows_path_arguments": false,
+  "returns_raw_waveforms": false,
+  "outputs": ["PNG", "FIG", "metadata.json"],
+  "scope": "Full-record overview only; observation panel decimated, residuals retain every sample."
+}

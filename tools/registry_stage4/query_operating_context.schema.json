@@ -1,0 +1,51 @@
+{
+  "name": "query_operating_context",
+  "version": "EMA-STAGE4-ADAPTER-1.0",
+  "description": "Query approved operating records and explicitly unavailable independent information.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "case_id": {
+        "type": "string",
+        "pattern": "^CASE-[0-9a-f]{32}$"
+      },
+      "fields": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "load_command",
+            "load_compensation",
+            "independent_load",
+            "initial_reference",
+            "signal_acquisition"
+          ]
+        },
+        "minItems": 1,
+        "maxItems": 5,
+        "uniqueItems": true
+      },
+      "time_range_s": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "required": [
+      "case_id"
+    ],
+    "additionalProperties": false
+  },
+  "statuses": [
+    "ok",
+    "not_applicable",
+    "insufficient_data",
+    "execution_error"
+  ],
+  "returns_raw_waveforms": false,
+  "allows_path_arguments": false
+}

@@ -1,0 +1,31 @@
+{
+  "provider": "deepseek_official",
+  "deployment": "cloud_api",
+  "api_style": "openai_compatible_chat_completions",
+  "base_url": "https://api.deepseek.com",
+  "api_key_env": "DEEPSEEK_API_KEY",
+  "model": "deepseek-flash",
+  "generation_settings": {
+    "temperature": 0,
+    "enable_thinking": false,
+    "stream": false,
+    "max_output_tokens_per_diagnostic_response": 4096
+  },
+  "call_budget": {
+    "setup_max_http_requests_per_run": 2,
+    "setup_max_output_tokens_per_request": 256,
+    "automatic_retries": 0,
+    "diagnostic_model_responses_per_task": 12,
+    "diagnostic_tool_calls_per_task": 20,
+    "diagnostic_wall_time_limit_s": 300,
+    "diagnostic_new_simulations_per_task": 0,
+    "development_repeats_per_task": 1,
+    "formal_budget_frozen": false,
+    "report_repair_limit": 1
+  },
+  "thinking_transport": "thinking.type=disabled; not Aliyun enable_thinking",
+  "automatic_provider_fallback": false,
+  "model_version_frozen": false,
+  "model_alias_limitation": "Configuration is fixed; provider alias does not prove fixed weight snapshot.",
+  "config_version": "EMA-SOURCE-EXAMPLE-1.0"
+}
